@@ -1,0 +1,29 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "description ." "marketdata ." "chart chart";
+  justify-content: center;
+  align-items: center;
+}
+
+#dashboard-img {
+  display: inline;
+}
+
+#dashboard-name {
+  display: inline;
+}
+
+.description {
+  grid-area: description;
+}
+
+.market-data {
+  grid-area: marketdata;
+}
+
+.chart {
+  grid-area: chart;
+  position: relative;
+  background-color: #5d577541;
+}
