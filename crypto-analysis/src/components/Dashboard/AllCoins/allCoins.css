@@ -1,0 +1,23 @@
+.coinGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-areas: "coinInfo miniLine summary"; */
+  grid-gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.coinInfo {
+  display: flex;
+  justify-content: space-around;
+}
+
+.miniLine {
+  align-self: center;
+  justify-content: center;
+  /* background-color: rgb(56, 57, 68); */
+}
+
+.summary {
+  justify-self: center;
+}

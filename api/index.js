@@ -9,16 +9,17 @@ const CoinGeckoClient = new CoinGecko();
 app = express();
 app.use(CORS());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
-  try {
-    const bitcoin = await CoinGeckoClient.coins.fetch("bitcoin", {});
+// app.get("/", async (req, res) => {
+//   try {
+//     const bitcoin = await CoinGeckoClient.coins.fetch("bitcoin", {});
 
-    res.json(bitcoin.data);
-  } catch (e) {
-    console.log(e);
-  }
-});
+//     res.json(bitcoin.data);
+//   } catch (e) {
+//     console.log(e);
+//   }
+// });
 
 app.get("/historical", async (req, res) => {
   try {
@@ -29,6 +30,34 @@ app.get("/historical", async (req, res) => {
     res.json(historical.data);
   } catch (e) {
     console.log(e);
+  }
+});
+
+app.get("/all", async (req, res) => {
+  try {
+    const allCoins = await CoinGeckoClient.coins.all({
+      per_page: 10,
+    });
+    // console.log(allCoins);
+    return res.json(allCoins.data);
+  } catch (e) {
+    console.log("that one", e.message);
+  }
+});
+
+//fetch market chart 24 hour
+app.post("/fetchmarketchart", async (req, res) => {
+  try {
+    // console.log(typeof req.body.coinId);
+    const allCoins = await CoinGeckoClient.coins.fetchMarketChart(
+      req.body.coinId,
+      {
+        days: "1",
+      }
+    );
+    return res.json(allCoins.data);
+  } catch (e) {
+    console.log("this one", e.message);
   }
 });
 

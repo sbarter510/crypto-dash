@@ -10,13 +10,23 @@ export default function LineChart(props) {
       options={{
         maintainAspectRatio: true,
         borderWidth: "2",
+        borderColor: "rgb(0, 99, 132)",
         pointRadius: 0,
         scales: {
           x: {
             ticks: {
               autoSkip: true,
-              maxTicksLimit: 12,
+              maxTicksLimit: 1,
               maxRotation: 45,
+              display: false,
+            },
+          },
+          y: {
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 1,
+              maxRotation: 45,
+              display: false,
             },
           },
         },
