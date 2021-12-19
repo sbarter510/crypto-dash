@@ -8,11 +8,22 @@ export default function LineChart(props) {
     <Line
       data={props.data}
       options={{
+        responsive: true,
         maintainAspectRatio: true,
         borderWidth: "2",
         borderColor: "rgb(0, 99, 132)",
         pointRadius: 0,
+
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+
         scales: {
+          myScale: {
+            display: false,
+          },
           x: {
             ticks: {
               autoSkip: true,

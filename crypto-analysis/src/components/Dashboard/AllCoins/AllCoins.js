@@ -19,8 +19,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   Title,
-  Tooltip,
-  Legend
+  Legend,
+  Tooltip
 );
 
 export default function AllCoins(props) {
@@ -34,57 +34,87 @@ export default function AllCoins(props) {
 
   const displayCoins = () => {
     return props.data.map((coin, index) => {
-      console.log(props.miniLineData[coin.id].prices[0]);
-
       const labels = props.miniLineData[coin.id].prices.map((p) =>
         new Date(p[0]).toDateString()
       );
       const data = {
         labels,
-        data: props.miniLineData[`${coin.id}`].prices.map((p) => p[1]),
         datasets: [
           {
             label: "",
             data: props.miniLineData[`${coin.id}`].prices.map((p) => p[1]),
-            color: "rgb(0, 99, 132)",
-            lineColor: "rgb(0, 150, 132)",
-
-            fillColor: "rgba(0, 99, 132, 0.2)",
-            backgroundColor: "rgb(0, 99, 99)",
+            width: 200,
+            height: 100,
           },
         ],
       };
 
       return (
-        <>
-          <div className="coinInfo" key={coin.id}>
-            <img src={coin.image.small} alt={`${coin.image.name}`} />
-            <h3>{coin.name}</h3>
+        <React.Fragment key={coin.id}>
+          <div className="coinInfo">
+            <div className="info-flex">
+              <img
+                src={coin.image.small}
+                alt={`${coin.image.name}`}
+                className="coin-logo"
+              />
+              <h2>{coin.name}</h2>
+              <h3>${coin.market_data.current_price.usd}</h3>
+            </div>
           </div>
           <div className="miniLine">
             <LineChart data={data} />
           </div>
           <div className="summary">
-            <p
-              style={{
-                color: `${
-                  coin.market_data.price_change_percentage_24h < 0
-                    ? "red"
-                    : "blue"
-                }`,
-              }}
-            >
-              {coin.market_data.price_change_percentage_24h}
-            </p>
+            <div>
+              <h2>Percent Change</h2>
+            </div>
+            <div>
+              <h2>Total Volume</h2>
+            </div>
+            <div>
+              <h2>Market Cap</h2>
+            </div>
+            <div>
+              <p
+                style={{
+                  color: `${
+                    coin.market_data.price_change_percentage_24h < 0
+                      ? "red"
+                      : "green"
+                  }`,
+                }}
+              >
+                {parseFloat(
+                  coin.market_data.price_change_percentage_24h
+                ).toFixed(2)}
+                %
+              </p>
+            </div>
+            <div>
+              <p>
+                $
+                {Intl.NumberFormat("en-US").format(
+                  coin.market_data.market_cap.usd
+                )}
+              </p>
+            </div>
+            <div>
+              <p>
+                $
+                {Intl.NumberFormat("en-US").format(
+                  coin.market_data.market_cap.usd
+                )}
+              </p>
+            </div>
           </div>
-        </>
+        </React.Fragment>
       );
     });
   };
 
   return (
     <div className="coinGrid">
-      {/* {props.loaded ? displayCoins() : <h2>loading</h2>} */}
       {allCoinsLoaded ? displayCoins() : <p>loading</p>}
     </div>
   );

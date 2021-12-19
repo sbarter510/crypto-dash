@@ -2,22 +2,58 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* grid-template-areas: "coinInfo miniLine summary"; */
-  grid-gap: 15px;
-  align-items: center;
+  row-gap: 30px;
+  /* align-items: space-around; */
   justify-content: center;
+  border-radius: 10px;
+}
+
+.info-flex {
+  display: flex;
+  flex-basis: 100%;
+  height: 281px;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 .coinInfo {
   display: flex;
   justify-content: space-around;
+  align-self: center;
+  background-color: #0f1a27;
 }
 
-.miniLine {
-  align-self: center;
-  justify-content: center;
-  /* background-color: rgb(56, 57, 68); */
+.coin-logo {
+  width: 50px;
+  height: 50px;
 }
+.miniLine {
+  position: relative;
+  height: 281px;
+  width: 100%;
+
+  background-color: #0f1a27;
+}
+
+/* .summary {
+  display: flex;
+  flex-basis: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #192b41;
+} */
 
 .summary {
-  justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #0f1925;
+  align-content: center;
+  justify-items: center;
+}
+
+p {
+  font-size: 20px;
 }

@@ -11,15 +11,15 @@ app.use(CORS());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.get("/", async (req, res) => {
-//   try {
-//     const bitcoin = await CoinGeckoClient.coins.fetch("bitcoin", {});
+app.get("/", async (req, res) => {
+  try {
+    const bitcoin = await CoinGeckoClient.coins.fetch("bitcoin", {});
 
-//     res.json(bitcoin.data);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// });
+    res.json(bitcoin.data);
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 app.get("/historical", async (req, res) => {
   try {

@@ -11,8 +11,8 @@ function App() {
     Expires: "0",
   };
   //currently only getting bitcoin data
-  // const [data, setData] = useState();
-  // const [historical, setHistorical] = useState();
+  const [data, setData] = useState();
+  const [historical, setHistorical] = useState();
   const [allData, setAllData] = useState([]);
   const [miniLineData, setMiniLineData] = useState({});
   const [isLoading, setIsLoading] = useState({ isLoading: true });
@@ -45,24 +45,18 @@ function App() {
   // }, []);
 
   useEffect(() => {
-    // const fetchData = () => {
     axios
       .get("http://localhost:5000/all")
       .then((res) => {
         return setAllData(() => res.data);
       })
       .catch((e) => console.log(e));
-    // };
-
-    // fetchData();
   }, []);
-
-  // let allCoinChartData = {};
 
   useEffect(() => {
     if (allData) {
       allData.map((coin) => {
-        axios
+        return axios
           .post(
             "http://localhost:5000/fetchmarketchart",
             { coinId: coin.id },
@@ -76,30 +70,6 @@ function App() {
           .catch((e) => console.log(e));
       });
     }
-    // if (allData) {
-    //   const fetchCoinData = (coinId) => {
-    //     axios
-    //       .post(
-    //         "http://localhost:5000/fetchmarketchart",
-    //         { coinId: coinId },
-    //         { headers: { "content-type": "application/json" } }
-    //       )
-    //       .then((res) => {
-    //         allCoinChartData[`${coinId}`] = res.data;
-    //       })
-    //       .catch((e) => console.log(e));
-    //   };
-
-    // const fetchSingleCoinData = () => {
-    //   try {
-    //     allData.forEach((coin) => fetchCoinData(coin.id));
-    //     setMiniLineData(() => allCoinChartData);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // };
-
-    // fetchSingleCoinData();
   }, [allData]);
 
   useEffect(() => {
