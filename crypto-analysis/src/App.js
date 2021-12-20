@@ -23,34 +23,9 @@ function App() {
 
   const [allData, setAllData] = useState([]);
   const [miniLineData, setMiniLineData] = useState({});
+  const [miniLineRange, setMiniLineRange] = useState({ days: "1" });
   const [isLoading, setIsLoading] = useState({ isLoading: true });
   const [loaded, setLoaded] = useState({ loaded: false });
-
-  // useEffect(() => {
-  //   let fetchData = async () => {
-  //     await axios
-  //       .get("http://localhost:5000/")
-  //       .then((res) => {
-  //         return setData(res.data);
-  //       })
-  //       .catch((e) => console.log(e));
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   let fetchData = async () => {
-  //     await axios
-  //       .get("http://localhost:5000/historical")
-  //       .then((res) => {
-  //         return setHistorical(res.data);
-  //       })
-  //       .catch((e) => console.log(e));
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     axios
@@ -61,13 +36,15 @@ function App() {
       .catch((e) => console.log(e));
   }, []);
 
+  //TODO: Update the coin summary based on time scale
+
   useEffect(() => {
     if (allData) {
-      allData.map((coin) => {
+      allData.map(async (coin) => {
         return axios
           .post(
             "http://localhost:5000/fetchmarketchart",
-            { coinId: coin.id },
+            { coinId: coin.id, days: miniLineRange.days },
             { headers: { "content-type": "application/json" } }
           )
           .then((res) => {
@@ -78,15 +55,13 @@ function App() {
           .catch((e) => console.log(e));
       });
     }
-  }, [allData]);
+  }, [allData, miniLineRange.days]);
 
   useEffect(() => {
     if (miniLineData) {
       return setIsLoading(() => {
         return { isLoading: false };
       });
-    } else {
-      return null;
     }
   }, [miniLineData]);
 
@@ -111,6 +86,7 @@ function App() {
                   data={allData}
                   miniLineData={miniLineData}
                   loaded={loaded.loaded}
+                  setMiniLineRange={setMiniLineRange}
                 />
               }
             >

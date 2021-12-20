@@ -51,10 +51,11 @@ app.get("/all", async (req, res) => {
 app.post("/fetchmarketchart", async (req, res) => {
   try {
     // console.log(typeof req.body.coinId);
+    // console.log(req.body.days);
     const allCoins = await CoinGeckoClient.coins.fetchMarketChart(
       req.body.coinId,
       {
-        days: "1",
+        days: req.body.days,
       }
     );
     return res.json(allCoins.data);

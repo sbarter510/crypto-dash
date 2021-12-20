@@ -47,20 +47,32 @@ export default function AllCoins(props) {
         setActive(() => {
           return { day: true, week: "", month: "", year: "" };
         });
+        props.setMiniLineRange(() => {
+          return { days: "1" };
+        });
         break;
       case "Week":
         setActive(() => {
           return { day: "", week: true, month: "", year: "" };
+        });
+        props.setMiniLineRange(() => {
+          return { days: "7" };
         });
         break;
       case "Month":
         setActive(() => {
           return { day: "", week: "", month: true, year: "" };
         });
+        props.setMiniLineRange(() => {
+          return { days: "30" };
+        });
         break;
       case "Year":
         setActive(() => {
           return { day: "", week: "", month: "", year: true };
+        });
+        props.setMiniLineRange(() => {
+          return { days: "365" };
         });
         break;
       default:
