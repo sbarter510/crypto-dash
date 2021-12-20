@@ -11,6 +11,8 @@ import {
   Legend,
   registerables,
 } from "chart.js";
+
+import { Navigate, useNavigate } from "react-router-dom";
 import LineChart from "../Line/Line";
 
 ChartJS.register(
@@ -66,6 +68,14 @@ export default function AllCoins(props) {
     }
   };
 
+  //useNavigate is a hook that allows us to navigate to a new page
+  const navigate = useNavigate();
+
+  const coinClickedHandler = (e) => {
+    const coinName = e.target.innerText.split("\n")[0];
+    return navigate("/" + coinName, { state: { coinName: coinName } });
+  };
+
   const displayCoins = () => {
     return props.data.map((coin, index) => {
       const labels = props.miniLineData[coin.id].prices.map((p) =>
@@ -86,7 +96,7 @@ export default function AllCoins(props) {
       return (
         <React.Fragment key={coin.id}>
           <div className="coinInfo">
-            <div className="info-flex">
+            <div className="info-flex" onClick={(e) => coinClickedHandler(e)}>
               <img
                 src={coin.image.small}
                 alt={`${coin.image.name}`}
@@ -125,7 +135,7 @@ export default function AllCoins(props) {
               <p>
                 $
                 {Intl.NumberFormat("en-US").format(
-                  coin.market_data.market_cap.usd
+                  coin.market_data.total_volume.usd
                 )}
               </p>
             </div>

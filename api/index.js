@@ -11,19 +11,21 @@ app.use(CORS());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
+app.get("/dashboard/:coin", async (req, res) => {
+  var coin = req.params.coin;
   try {
-    const bitcoin = await CoinGeckoClient.coins.fetch("bitcoin", {});
+    const coinData = await CoinGeckoClient.coins.fetch(coin, {});
 
-    res.json(bitcoin.data);
+    res.json(coinData.data);
   } catch (e) {
     console.log(e);
   }
 });
 
-app.get("/historical", async (req, res) => {
+app.get("/historical/:coin", async (req, res) => {
+  var coin = req.params.coin;
   try {
-    const historical = await CoinGeckoClient.coins.fetchMarketChart("bitcoin", {
+    const historical = await CoinGeckoClient.coins.fetchMarketChart(coin, {
       days: "max",
     });
     console.log(historical);

@@ -3,6 +3,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import Dashboard from "./components/Dashboard/Dashboard";
 import "./App.css";
 import AllCoins from "./components/Dashboard/AllCoins/AllCoins";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
+
+import useWithRouter from "./hooks/useWithRouter";
 
 function App() {
   axios.defaults.headers = {
@@ -11,8 +20,7 @@ function App() {
     Expires: "0",
   };
   //currently only getting bitcoin data
-  const [data, setData] = useState();
-  const [historical, setHistorical] = useState();
+
   const [allData, setAllData] = useState([]);
   const [miniLineData, setMiniLineData] = useState({});
   const [isLoading, setIsLoading] = useState({ isLoading: true });
@@ -91,20 +99,37 @@ function App() {
   }, [isLoading]);
 
   return (
-    <div className="App">
-      <div className="container">
-        {loaded.loaded && (
-          <AllCoins
-            data={allData}
-            miniLineData={miniLineData}
-            loaded={loaded.loaded}
-          />
-        )}
-        {/* {data && historical ? (
+    <Router>
+      <div className="App">
+        <div className="container">
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <AllCoins
+                  data={allData}
+                  miniLineData={miniLineData}
+                  loaded={loaded.loaded}
+                />
+              }
+            >
+              {/* {loaded.loaded && (
+              <AllCoins
+                data={allData}
+                miniLineData={miniLineData}
+                loaded={loaded.loaded}
+              />
+              )} */}
+            </Route>
+            <Route path="/:coin" element={<Dashboard />}></Route>
+          </Routes>
+          {/* {data && historical ? (
           <Dashboard data={data} historical={historical} />
         ) : null} */}
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

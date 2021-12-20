@@ -74,7 +74,6 @@
 .day-header:hover {
   cursor: pointer;
   filter: brightness(1.2);
-  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .week-header:hover {
