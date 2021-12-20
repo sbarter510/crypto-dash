@@ -39,6 +39,7 @@ app.get("/all", async (req, res) => {
   try {
     const allCoins = await CoinGeckoClient.coins.all({
       per_page: 10,
+      page: 1,
     });
     // console.log(allCoins);
     return res.json(allCoins.data);

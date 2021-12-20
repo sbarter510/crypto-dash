@@ -55,19 +55,6 @@ export default function Dashboard(props) {
     }
   }, [data, coinName]);
 
-  // const labels = historical.prices.map((p) => new Date(p[0]).toDateString());
-  // const chartData = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label: `Historical ${data.name} data`,
-  //       data: historical.prices.map((p) => p[1]),
-  //       borderColor: "rgb(255, 99, 132)",
-  //       lineColor: "rgb(255, 99, 132)",
-  //     },
-  //   ],
-  // };
-
   if (historical) {
     const labels = historical.prices.map((p) => new Date(p[0]).toDateString());
     const chartData = {

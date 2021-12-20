@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import "./allCoins.css";
 import {
   Chart as ChartJS,
@@ -25,7 +25,7 @@ ChartJS.register(
   Tooltip
 );
 
-export default function AllCoins(props) {
+function AllCoins(props) {
   const [allCoinsLoaded, setAllCoinsLoaded] = useState(false);
   const [active, setActive] = useState({
     day: true,
@@ -212,3 +212,5 @@ export default function AllCoins(props) {
     </div>
   );
 }
+
+export default memo(AllCoins);

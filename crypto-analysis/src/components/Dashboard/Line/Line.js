@@ -9,11 +9,11 @@ export default function LineChart(props) {
       data={props.data}
       options={{
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         borderWidth: "2",
         borderColor: "rgb(0, 99, 132)",
         pointRadius: 0,
-
+        animation: false,
         plugins: {
           legend: {
             display: false,
