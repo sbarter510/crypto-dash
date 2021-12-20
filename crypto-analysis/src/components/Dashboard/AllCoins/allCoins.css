@@ -25,6 +25,15 @@
   background-color: #0f1a27;
 }
 
+.coinInfo:hover {
+  background-color: #152335;
+}
+
+.info-flex:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
 .coin-logo {
   width: 50px;
   height: 50px;
@@ -46,14 +55,60 @@
   background-color: #192b41;
 } */
 
+.info-header {
+  justify-self: center;
+  align-self: center;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-around;
+  align-self: stretch;
+}
+
+.active {
+  filter: brightness(1.2);
+  border-bottom: 2px solid #3cb683;
+}
+
+.day-header:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.week-header:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.month-header:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.year-header:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.summary-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: space-between;
+  align-items: center;
+  margin-left: 25px;
+}
+
 .summary {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: #0f1925;
   align-content: center;
   justify-items: center;
+  gap: 10px;
 }
 
 p {
-  font-size: 20px;
+  font-size: 1.3rem;
 }

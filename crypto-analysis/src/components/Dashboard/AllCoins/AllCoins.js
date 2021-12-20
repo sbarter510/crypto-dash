@@ -25,12 +25,46 @@ ChartJS.register(
 
 export default function AllCoins(props) {
   const [allCoinsLoaded, setAllCoinsLoaded] = useState(false);
+  const [active, setActive] = useState({
+    day: true,
+    week: "",
+    month: "",
+    year: "",
+  });
 
   useEffect(() => {
     if (Object.keys(props.miniLineData).length === 10) {
       setAllCoinsLoaded(true);
     }
   }, [props.miniLineData]);
+
+  const onClickHandler = (e) => {
+    console.log(e.target.innerText);
+    switch (e.target.innerText) {
+      case "Day":
+        setActive(() => {
+          return { day: true, week: "", month: "", year: "" };
+        });
+        break;
+      case "Week":
+        setActive(() => {
+          return { day: "", week: true, month: "", year: "" };
+        });
+        break;
+      case "Month":
+        setActive(() => {
+          return { day: "", week: "", month: true, year: "" };
+        });
+        break;
+      case "Year":
+        setActive(() => {
+          return { day: "", week: "", month: "", year: true };
+        });
+        break;
+      default:
+        return null;
+    }
+  };
 
   const displayCoins = () => {
     return props.data.map((coin, index) => {
@@ -59,22 +93,18 @@ export default function AllCoins(props) {
                 className="coin-logo"
               />
               <h2>{coin.name}</h2>
-              <h3>${coin.market_data.current_price.usd}</h3>
+              <h3>
+                $
+                {Intl.NumberFormat("en-US").format(
+                  coin.market_data.current_price.usd
+                )}
+              </h3>
             </div>
           </div>
           <div className="miniLine">
             <LineChart data={data} />
           </div>
           <div className="summary">
-            <div>
-              <h2>Percent Change</h2>
-            </div>
-            <div>
-              <h2>Total Volume</h2>
-            </div>
-            <div>
-              <h2>Market Cap</h2>
-            </div>
             <div>
               <p
                 style={{
@@ -115,6 +145,47 @@ export default function AllCoins(props) {
 
   return (
     <div className="coinGrid">
+      <div className="info-header">
+        <h2>Coin</h2>
+      </div>
+      <div className="chart-header">
+        <div
+          className={`day-header ${active.day ? "active" : ""}`}
+          onClick={(e) => onClickHandler(e)}
+        >
+          <h2>Day</h2>
+        </div>
+        <div
+          className={`week-header ${active.week ? "active" : ""}`}
+          onClick={(e) => onClickHandler(e)}
+        >
+          <h2>Week</h2>
+        </div>
+        <div
+          className={`month-header ${active.month ? "active" : ""}`}
+          onClick={(e) => onClickHandler(e)}
+        >
+          <h2>Month</h2>
+        </div>
+        <div
+          className={`year-header ${active.year ? "active" : ""}`}
+          onClick={(e) => onClickHandler(e)}
+        >
+          <h2>Year</h2>
+        </div>
+      </div>
+      <div className="summary-header">
+        <div>
+          <h2>% Change</h2>
+        </div>
+        <div>
+          <h2>Total Volume</h2>
+        </div>
+        <div>
+          <h2>Market Cap</h2>
+        </div>
+      </div>
+
       {allCoinsLoaded ? displayCoins() : <p>loading</p>}
     </div>
   );
