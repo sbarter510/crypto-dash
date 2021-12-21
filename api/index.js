@@ -35,11 +35,12 @@ app.get("/historical/:coin", async (req, res) => {
   }
 });
 
-app.get("/all", async (req, res) => {
+app.post("/all", async (req, res) => {
+  let pageNumber = req.body.pageNumber;
   try {
     const allCoins = await CoinGeckoClient.coins.all({
       per_page: 10,
-      page: 1,
+      page: pageNumber,
     });
     // console.log(allCoins);
     return res.json(allCoins.data);

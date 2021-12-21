@@ -1,0 +1,10 @@
+.paginator-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+i:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback, memo } from "react";
 import "./allCoins.css";
+
+import Paginator from "../../Paginator/Paginator";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,7 +40,13 @@ function AllCoins(props) {
     if (Object.keys(props.miniLineData).length === 10) {
       setAllCoinsLoaded(true);
     }
+
+    return () => {
+      setAllCoinsLoaded(false);
+    };
   }, [props.miniLineData]);
+
+  //probably want to convert this to a context / state management solution
 
   const onClickHandler = (e) => {
     console.log(e.target.innerText);
@@ -166,49 +174,56 @@ function AllCoins(props) {
   };
 
   return (
-    <div className="coinGrid">
-      <div className="info-header">
-        <h2>Coin</h2>
-      </div>
-      <div className="chart-header">
-        <div
-          className={`day-header ${active.day ? "active" : ""}`}
-          onClick={(e) => onClickHandler(e)}
-        >
-          <h2>Day</h2>
+    <div>
+      <div className="coinGrid">
+        <div className="info-header">
+          <h2>Coin</h2>
         </div>
-        <div
-          className={`week-header ${active.week ? "active" : ""}`}
-          onClick={(e) => onClickHandler(e)}
-        >
-          <h2>Week</h2>
+        <div className="chart-header">
+          <div
+            className={`day-header ${active.day ? "active" : ""}`}
+            onClick={(e) => onClickHandler(e)}
+          >
+            <h2>Day</h2>
+          </div>
+          <div
+            className={`week-header ${active.week ? "active" : ""}`}
+            onClick={(e) => onClickHandler(e)}
+          >
+            <h2>Week</h2>
+          </div>
+          <div
+            className={`month-header ${active.month ? "active" : ""}`}
+            onClick={(e) => onClickHandler(e)}
+          >
+            <h2>Month</h2>
+          </div>
+          <div
+            className={`year-header ${active.year ? "active" : ""}`}
+            onClick={(e) => onClickHandler(e)}
+          >
+            <h2>Year</h2>
+          </div>
         </div>
-        <div
-          className={`month-header ${active.month ? "active" : ""}`}
-          onClick={(e) => onClickHandler(e)}
-        >
-          <h2>Month</h2>
+        <div className="summary-header">
+          <div>
+            <h2>% Change</h2>
+          </div>
+          <div>
+            <h2>Total Volume</h2>
+          </div>
+          <div>
+            <h2>Market Cap</h2>
+          </div>
         </div>
-        <div
-          className={`year-header ${active.year ? "active" : ""}`}
-          onClick={(e) => onClickHandler(e)}
-        >
-          <h2>Year</h2>
-        </div>
-      </div>
-      <div className="summary-header">
-        <div>
-          <h2>% Change</h2>
-        </div>
-        <div>
-          <h2>Total Volume</h2>
-        </div>
-        <div>
-          <h2>Market Cap</h2>
-        </div>
+
+        {allCoinsLoaded ? displayCoins() : <p>loading</p>}
       </div>
 
-      {allCoinsLoaded ? displayCoins() : <p>loading</p>}
+      <Paginator
+        pageNumber={props.pageNumber}
+        setPageNumber={props.setPageNumber}
+      />
     </div>
   );
 }

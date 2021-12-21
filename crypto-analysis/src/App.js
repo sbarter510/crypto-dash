@@ -26,15 +26,20 @@ function App() {
   const [miniLineRange, setMiniLineRange] = useState({ days: "1" });
   const [isLoading, setIsLoading] = useState({ isLoading: true });
   const [loaded, setLoaded] = useState({ loaded: false });
+  const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/all")
+      .post("http://localhost:5000/all", { pageNumber: pageNumber })
       .then((res) => {
         return setAllData(() => res.data);
       })
       .catch((e) => console.log(e));
-  }, []);
+
+    return () => {
+      setAllData([]);
+    };
+  }, [pageNumber]);
 
   //TODO: Update the coin summary based on time scale
 
@@ -55,6 +60,10 @@ function App() {
           .catch((e) => console.log(e));
       });
     }
+
+    return () => {
+      setMiniLineData({});
+    };
   }, [allData, miniLineRange.days]);
 
   useEffect(() => {
@@ -63,6 +72,12 @@ function App() {
         return { isLoading: false };
       });
     }
+
+    return () => {
+      setIsLoading(() => {
+        return { isLoading: true };
+      });
+    };
   }, [miniLineData]);
 
   useEffect(() => {
@@ -71,6 +86,12 @@ function App() {
         return { loaded: true };
       });
     }
+
+    return () => {
+      setLoaded(() => {
+        return { loaded: false };
+      });
+    };
   }, [isLoading]);
 
   return (
@@ -78,6 +99,7 @@ function App() {
       <div className="App">
         <div className="container">
           <Routes>
+            {/* {loaded ? ( */}
             <Route
               exact
               path="/"
@@ -87,22 +109,28 @@ function App() {
                   miniLineData={miniLineData}
                   loaded={loaded.loaded}
                   setMiniLineRange={setMiniLineRange}
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
                 />
               }
-            >
-              {/* {loaded.loaded && (
-              <AllCoins
-                data={allData}
-                miniLineData={miniLineData}
-                loaded={loaded.loaded}
-              />
-              )} */}
-            </Route>
+            ></Route>
+            {/* ) : null} */}
+            {/* <Route
+              exact
+              path="/"
+              element={
+                <AllCoins
+                  data={allData}
+                  miniLineData={miniLineData}
+                  loaded={loaded.loaded}
+                  setMiniLineRange={setMiniLineRange}
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
+                />
+              }
+            ></Route> */}
             <Route path="/:coin" element={<Dashboard />}></Route>
           </Routes>
-          {/* {data && historical ? (
-          <Dashboard data={data} historical={historical} />
-        ) : null} */}
         </div>
       </div>
     </Router>
