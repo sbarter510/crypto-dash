@@ -1,7 +1,7 @@
 import React from "react";
 import LineChart from "../Line/Line";
 
-export default function Historical() {
+export default function Historical(props) {
   return (
     <div className="historical-grid">
       <div className="description">

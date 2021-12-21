@@ -38,6 +38,7 @@ function App() {
 
     return () => {
       setAllData([]);
+      setMiniLineData({});
     };
   }, [pageNumber]);
 
@@ -60,10 +61,6 @@ function App() {
           .catch((e) => console.log(e));
       });
     }
-
-    return () => {
-      setMiniLineData({});
-    };
   }, [allData, miniLineRange.days]);
 
   useEffect(() => {
@@ -99,22 +96,24 @@ function App() {
       <div className="App">
         <div className="container">
           <Routes>
-            {/* {loaded ? ( */}
-            <Route
-              exact
-              path="/"
-              element={
-                <AllCoins
-                  data={allData}
-                  miniLineData={miniLineData}
-                  loaded={loaded.loaded}
-                  setMiniLineRange={setMiniLineRange}
-                  pageNumber={pageNumber}
-                  setPageNumber={setPageNumber}
-                />
-              }
-            ></Route>
-            {/* ) : null} */}
+            {loaded ? (
+              <Route
+                exact
+                path="/"
+                element={
+                  <AllCoins
+                    data={allData}
+                    miniLineData={miniLineData}
+                    loaded={loaded.loaded}
+                    setMiniLineRange={setMiniLineRange}
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                  />
+                }
+              ></Route>
+            ) : (
+              <p>loading</p>
+            )}
             {/* <Route
               exact
               path="/"

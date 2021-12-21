@@ -13,6 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/dashboard/:coin", async (req, res) => {
   var coin = req.params.coin;
+  coin = coin.replace(" ", "");
+
   try {
     const coinData = await CoinGeckoClient.coins.fetch(coin, {});
 
@@ -22,13 +24,15 @@ app.get("/dashboard/:coin", async (req, res) => {
   }
 });
 
+//TODO: Error handling in case coin is not returned (some not returning historical data)
 app.get("/historical/:coin", async (req, res) => {
   var coin = req.params.coin;
+  coin = coin.replace(" ", "");
   try {
     const historical = await CoinGeckoClient.coins.fetchMarketChart(coin, {
       days: "max",
     });
-    console.log(historical);
+
     res.json(historical.data);
   } catch (e) {
     console.log(e);
@@ -42,7 +46,7 @@ app.post("/all", async (req, res) => {
       per_page: 10,
       page: pageNumber,
     });
-    // console.log(allCoins);
+
     return res.json(allCoins.data);
   } catch (e) {
     console.log("that one", e.message);
@@ -52,8 +56,6 @@ app.post("/all", async (req, res) => {
 //fetch market chart 24 hour
 app.post("/fetchmarketchart", async (req, res) => {
   try {
-    // console.log(typeof req.body.coinId);
-    // console.log(req.body.days);
     const allCoins = await CoinGeckoClient.coins.fetchMarketChart(
       req.body.coinId,
       {

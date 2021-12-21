@@ -49,7 +49,7 @@ function AllCoins(props) {
   //probably want to convert this to a context / state management solution
 
   const onClickHandler = (e) => {
-    console.log(e.target.innerText);
+    // console.log(e.target.innerText);
     switch (e.target.innerText) {
       case "Day":
         setActive(() => {
@@ -217,7 +217,7 @@ function AllCoins(props) {
           </div>
         </div>
 
-        {allCoinsLoaded ? displayCoins() : <p>loading</p>}
+        {allCoinsLoaded && props.miniLineData ? displayCoins() : <p>loading</p>}
       </div>
 
       <Paginator
@@ -228,4 +228,4 @@ function AllCoins(props) {
   );
 }
 
-export default memo(AllCoins);
+export default AllCoins;
