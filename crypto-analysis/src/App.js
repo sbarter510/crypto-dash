@@ -11,7 +11,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import useWithRouter from "./hooks/useWithRouter";
+// import useWithRouter from "./hooks/useWithRouter";
 
 function App() {
   axios.defaults.headers = {
@@ -42,7 +42,7 @@ function App() {
     };
   }, [pageNumber]);
 
-  //TODO: Update the coin summary based on time scale
+  //TODO: Update the coin summary based on time scale??
 
   useEffect(() => {
     if (allData) {

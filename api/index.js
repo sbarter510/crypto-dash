@@ -17,14 +17,18 @@ app.get("/dashboard/:coin", async (req, res) => {
 
   try {
     const coinData = await CoinGeckoClient.coins.fetch(coin, {});
-
-    res.json(coinData.data);
+    if (coinData) {
+      res.json(coinData.data);
+    } else {
+      res.json(coinData.response);
+    }
   } catch (e) {
     console.log(e);
   }
 });
 
 //TODO: Error handling in case coin is not returned (some not returning historical data)
+//Todo make range calls to coingecko api
 app.get("/historical/:coin", async (req, res) => {
   var coin = req.params.coin;
   coin = coin.replace(" ", "");
@@ -32,6 +36,25 @@ app.get("/historical/:coin", async (req, res) => {
     const historical = await CoinGeckoClient.coins.fetchMarketChart(coin, {
       days: "max",
     });
+
+    res.json(historical.data);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.get("/dashboard/range/:coin/:startDate/:endDate", async (req, res) => {
+  var coin = req.params.coin;
+  var startDate = req.params.startDate;
+  var endDate = req.params.endDate;
+
+  coin = coin.replace(" ", "");
+  try {
+    const historical = await CoinGeckoClient.coins.fetchMarketChartRange(coin, {
+      from: parseInt(startDate.slice(0, 10)),
+      to: parseInt(endDate.slice(0, 10)),
+    });
+    console.log(res);
 
     res.json(historical.data);
   } catch (e) {

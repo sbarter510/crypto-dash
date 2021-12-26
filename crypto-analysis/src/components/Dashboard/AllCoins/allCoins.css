@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* grid-template-areas: "coinInfo miniLine summary"; */
-  row-gap: 20px;
+  row-gap: 10px;
   /* align-items: space-around; */
   justify-content: center;
   border-radius: 10px;
@@ -15,8 +15,13 @@
   height: 100px;
   align-items: center;
   justify-content: space-around;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+
   border-radius: 10px;
+}
+
+#coin-search {
+  width: 100%;
+  background-color: #0f1a27;
 }
 
 .coinInfo {
@@ -33,6 +38,7 @@
 .info-flex:hover {
   cursor: pointer;
   filter: brightness(1.2);
+  border-bottom: 2px solid #14757c;
 }
 
 .coin-logo {
@@ -106,7 +112,7 @@
   background-color: #0f1925;
   align-content: center;
   justify-items: center;
-  gap: 10px;
+  /* gap: 10px; */
 }
 
 p {

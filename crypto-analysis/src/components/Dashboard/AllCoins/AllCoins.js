@@ -14,7 +14,7 @@ import {
   registerables,
 } from "chart.js";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LineChart from "../Line/Line";
 
 ChartJS.register(
@@ -177,7 +177,13 @@ function AllCoins(props) {
     <div>
       <div className="coinGrid">
         <div className="info-header">
-          <h2>Coin</h2>
+          <form>
+            <input
+              id="coin-search"
+              type="text"
+              placeholder="Search for a coin"
+            />
+          </form>
         </div>
         <div className="chart-header">
           <div
@@ -228,4 +234,4 @@ function AllCoins(props) {
   );
 }
 
-export default AllCoins;
+export default memo(AllCoins);
